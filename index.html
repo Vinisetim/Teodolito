@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Teodolito</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .teodolito-img {
+            display: block; 
+            max-width: 80%;
+            height: auto;
+            margin: 0px auto 25px auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: calc(100% - 20px); 
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #4CAF50;
+            border-radius: 4px;
+            background-color: #e8f5e9;
+            text-align: center;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📐 Teodolito Simples</h1>
+    
+    <img src="img/teodolito.jpeg" alt="Desenho de um teodolito" class="teodolito-img">
+    
+    <form onsubmit="event.preventDefault(); calcularAltura();">
+        
+        <label for="angulo">Ângulo de Inclinação ($\alpha$) [graus]:</label>
+        <input type="number" id="angulo" placeholder="Ex: 45" step="0.01" required>
+
+        <label for="distancia">Distância Horizontal ($D$) [metros]:</label>
+        <input type="number" id="distancia" placeholder="Ex: 20.5" step="0.01" required>
+
+        <label for="alturaTeodolito">Altura do Teodolito ($A_o$) [metros]:</label>
+        <input type="number" id="alturaTeodolito" value="1.60" step="0.01" required>
+
+        <button type="submit">Calcular Altura (H)</button>
+    </form>
+    
+    <div id="resultado">
+        A altura total (H) será exibida aqui.
+    </div>
+</div>
+
+<script>
+    function calcularAltura() {
+        const anguloGraus = parseFloat(document.getElementById('angulo').value);
+        const distancia = parseFloat(document.getElementById('distancia').value);
+        const alturaTeodolito = parseFloat(document.getElementById('alturaTeodolito').value);
+
+        if (isNaN(anguloGraus) || isNaN(distancia) || isNaN(alturaTeodolito)) {
+            document.getElementById('resultado').innerHTML = "Por favor, insira todos os valores numéricos válidos.";
+            return;
+        }
+
+        const anguloRadianos = anguloGraus * (Math.PI / 180);
+        
+        const h = distancia * Math.tan(anguloRadianos);
+        
+        const alturaTotal = h + alturaTeodolito;
+
+        document.getElementById('resultado').innerHTML = 
+            `A Altura Calculada é de: <strong>${alturaTotal.toFixed(2)} metros</strong>.`;
+    }
+</script>
+
+</body>
+</html>
